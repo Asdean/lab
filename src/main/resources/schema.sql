@@ -4,6 +4,7 @@ create table if not exists user
     id bigint(19) not null primary key,
     username varchar(45) not null default '' comment '登录账户名',
     password varchar(45) not null default '' comment '登录密码',
+    role_id bigint(19) not null default 1 comment '角色id',
     create_time datetime not null default current_timestamp() comment '注册时间',
     update_time datetime not null default current_timestamp() on update current_timestamp comment '更新时间'
     );
@@ -15,18 +16,6 @@ create table if not exists role
     name varchar(20) not null default '' comment '角色名称',
     create_time datetime not null default current_timestamp() comment '创建时间',
     update_time datetime not null default current_timestamp() on update current_timestamp comment '更新时间'
-    );
-
--- 创建用户角色关系表
-create table if not exists user_role
-(
-    id bigint(19) not null primary key,
-    user_id bigint(19) not null default 0 comment '',
-    role_id bigint(19) not null default 0 comment '',
-    create_time datetime not null default current_timestamp() comment '创建时间',
-    update_time datetime not null default current_timestamp() on update current_timestamp comment '更新时间',
-    index(user_id),
-    index(role_id)
     );
 
 -- 创建实验室表
