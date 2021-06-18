@@ -1,0 +1,19 @@
+###
+POST http://localhost:8080/lab/teacher/register
+Content-Type: application/json
+
+{
+  "username": "wangwu",
+  "password": "12"
+}
+
+###
+POST http://localhost:8080/lab/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###

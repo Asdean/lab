@@ -12,6 +12,11 @@ spring:
   jackson:
     default-property-inclusion: non_null # 序列化时忽略空值属性
 
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: assign_id
+
 server:
   port: 8080
 
@@ -22,3 +27,6 @@ logging:
       example: debug
   pattern:
     console: '%-5level %C.%M[%line] - %msg%n'
+
+my:
+  salt: 636eac2534bcfcb0

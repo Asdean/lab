@@ -1,0 +1,14 @@
+###
+GET http://localhost:8080/lab/admin/listUser
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlSWQiOjIsImV4cCI6MTYyMzk3ODc3NywidXNlcklkIjoxNDA1NDg4ODkyMTE4NzMyODAyLCJpYXQiOjE2MjM5NzY5Nzd9.QCIJQodYJjTjMKoeOApBDntg_WOXUhmNV6Vt2yn3e6o
+
+###
+PATCH http://localhost:8080/lab/admin/updateUserRole
+Content-Type: application/json
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlSWQiOjIsImV4cCI6MTYyMzk3ODc3NywidXNlcklkIjoxNDA1NDg4ODkyMTE4NzMyODAyLCJpYXQiOjE2MjM5NzY5Nzd9.QCIJQodYJjTjMKoeOApBDntg_WOXUhmNV6Vt2yn3e6o
+
+{
+  "id": "1405165498462568450",
+  "username": "ZhangSan",
+  "roleName": "教师"
+}
