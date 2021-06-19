@@ -11,6 +11,10 @@ spring:
     initialization-mode: always
   jackson:
     default-property-inclusion: non_null # 序列化时忽略空值属性
+  cache:
+    type: caffeine
+    caffeine:
+      spec: initialCapacity=10, maximumSize=200, expireAfterWrite=240s
 
 mybatis-plus:
   global-config:

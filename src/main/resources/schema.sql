@@ -43,7 +43,7 @@ create table if not exists course
     index(lab_id)
 );
 
--- 创建预约记录表
+-- 创建课表记录表
 # create table if not exists booking_record
 # (
 #     id bigint(19) primary key auto_increment,
@@ -56,8 +56,8 @@ create table if not exists course
 #     index(course_id)
 # );
 
--- 创建预约记录所选时间表
-create table if not exists booking_record
+-- 创建课程记录所选时间表
+create table if not exists course_record
 (
     id bigint(19) primary key auto_increment,
     course_id bigint(19) not null default 0 comment '课程id',

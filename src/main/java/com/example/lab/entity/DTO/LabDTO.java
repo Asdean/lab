@@ -9,11 +9,15 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class UserDTO {
+public class LabDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
 
-    private String username;
+    private String name;
 
-    private String roleName;
+    private String location;
+
+    private Integer number;
+
+    private String memo;
 }

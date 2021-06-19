@@ -1,3 +1,4 @@
+/*
 package com.example.lab;
 
 import com.github.benmanes.caffeine.cache.Cache;
@@ -30,3 +31,4 @@ public class SpringCacheConfig {
         return manager;
     }
 }
+*/

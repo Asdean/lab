@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/lab/admin/")
-public class TeacherController {
+public class AccountManageController {
 
     @Autowired
     private AdminService adminService;
@@ -36,7 +36,7 @@ public class TeacherController {
         if (rows != 1) {
             return ResultVO.error(500, "注册失败，服务器异常！");
         }
-        return ResultVO.success(Map.of("username", userVO.getUsername()));
+        return ResultVO.success(Map.of("msg", "添加用户成功"));
     }
 
     // 管理员修改用户权限
@@ -47,7 +47,7 @@ public class TeacherController {
         if (rows != 1) {
             return ResultVO.error(500, "修改失败！");
         }
-        return ResultVO.success(Map.of("username", userDTO.getUsername()));
+        return ResultVO.success(Map.of("msg", "修改用户信息成功"));
     }
 
     // 删除用户
@@ -58,6 +58,6 @@ public class TeacherController {
         if (rows != 1) {
             throw new MyException(400, "您所输入的用户不存在");
         }
-        return ResultVO.success(Map.of());
+        return ResultVO.success(Map.of("msg", "用户删除成功"));
     }
 }

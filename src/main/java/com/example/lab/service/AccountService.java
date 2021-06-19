@@ -27,7 +27,7 @@ public class AccountService {
     public int saveUser(AddUserVO userVO) {
         if (userVO.getRoleName() != null) {
             if (!("教师".equals(userVO.getRoleName()))) {
-                throw new MyException(400, "用户只能注册角色为老师的账号！");
+                throw new MyException(400, "用户只能注册角色为教师的账号！");
             }
             Role role = getRoleByRoleName(userVO.getRoleName());
             if (role == null) {
@@ -39,10 +39,7 @@ public class AccountService {
                 .username(userVO.getUsername())
                 .password(password)
                 .build();
-        if (u != null) {
-            return userMapper.insert(u);
-        }
-        return 0;
+        return userMapper.insert(u);
     }
 
     // 根据用户角色名称获取角色信息

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 @Setter
@@ -12,10 +14,12 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-@TableName("booking_record")
-public class BookingRecord {
+@TableName("course_record")
+public class CourseRecord {
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long courseId;
 
     private Integer weekNo;

@@ -22,7 +22,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/lab/teacher/register")
                 .excludePathPatterns("/lab/login");
         registry.addInterceptor(adminInterceptor)
-                .addPathPatterns("/lab/**")
+                .addPathPatterns("/lab/admin/**")
                 .excludePathPatterns("/lab/teacher/register")
                 .excludePathPatterns("/lab/login");
     }
