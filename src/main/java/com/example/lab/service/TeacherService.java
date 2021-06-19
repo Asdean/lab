@@ -65,6 +65,12 @@ public class TeacherService {
         return labId;
     }
 
+    @Cacheable(value = "lab", key = "#labName")
+    public Lab selectLabByName(String labName) {
+        Lab lab = labMapper.selectLabByName(labName);
+        return lab;
+    }
+
 
     public int saveCourse(CourseVO courseVO) {
         Course course1 = selectByCourseName(courseVO.getName());
@@ -131,6 +137,10 @@ public class TeacherService {
         Course course2 = selectByLabId(labId);
         if (course2 != null) {
             throw new MyException(401, "实验室已经占用！");
+        }
+        Lab lab = selectLabByName(courseDTO.getLabName());
+        if (lab.getNumber() < courseDTO.getStudentAmount()) {
+            throw new MyException(400, "实验室可容纳人数小于课程人数！");
         }
         Course c = Course.builder()
                 .id(courseDTO.getId())

@@ -1,7 +1,9 @@
 package com.example.lab.controller.teacher;
 
 import com.example.lab.entity.DTO.CourseDTO;
+import com.example.lab.entity.DTO.LabDTO;
 import com.example.lab.exception.MyException;
+import com.example.lab.service.AdminService;
 import com.example.lab.service.TeacherService;
 import com.example.lab.vo.CRResponseVO;
 import com.example.lab.vo.CourseRecordVO;
@@ -23,6 +25,8 @@ public class CourseManageController {
 
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private AdminService adminService;
 
     // 添加课程，labId不能为空，为空应该默认传入0
     @ApiOperation("添加课程")
@@ -42,6 +46,14 @@ public class CourseManageController {
     public ResultVO listCourses() {
         List<CourseDTO> courseDTOS = teacherService.selectCourses();
         return ResultVO.success(Map.of("courses", courseDTOS));
+    }
+
+    // 查询所有实验室
+    @ApiOperation("查询实验室")
+    @GetMapping("listLaboratory")
+    public ResultVO listLaboratory() {
+        List<LabDTO> labs = adminService.selectLabs();
+        return ResultVO.success(Map.of("labs", labs));
     }
 
     // 预约实验室
