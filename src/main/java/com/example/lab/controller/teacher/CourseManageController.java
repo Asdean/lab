@@ -3,6 +3,8 @@ package com.example.lab.controller.teacher;
 import com.example.lab.entity.DTO.CourseDTO;
 import com.example.lab.exception.MyException;
 import com.example.lab.service.TeacherService;
+import com.example.lab.vo.CRResponseVO;
+import com.example.lab.vo.CourseRecordVO;
 import com.example.lab.vo.CourseVO;
 import com.example.lab.vo.ResultVO;
 import io.swagger.annotations.ApiOperation;
@@ -66,8 +68,28 @@ public class CourseManageController {
 
     // 添加课表
     @ApiOperation("添加课表")
-    @DeleteMapping("addCourseRecord")
-    public ResultVO addCourseRecord() {
+    @PostMapping("addCourseRecord")
+    public ResultVO addCourseRecord(@RequestBody CourseRecordVO courseRecordVO) {
+        int rows = teacherService.addCourseRecord(courseRecordVO);
+        if (rows < 1) {
+            throw new MyException(500, "服务器错误！");
+        }
         return ResultVO.success(Map.of("msg", "添加课表成功"));
+    }
+
+    // 查询某一课程课表
+    @ApiOperation("根据课程id查询某一课程课表")
+    @GetMapping("listCourseRecordById/{cid}")
+    public ResultVO listCourseRecordById(@PathVariable Long cid) {
+        List<CRResponseVO> lists = teacherService.listCourseRecordById(cid);
+        return ResultVO.success(Map.of("course", lists));
+    }
+
+    // 查询课表
+    @ApiOperation("查询所有课表")
+    @GetMapping("listCourseRecord")
+    public ResultVO listCourseRecord() {
+        List<CRResponseVO> lists = teacherService.listCourseRecord();
+        return ResultVO.success(Map.of("courses", lists));
     }
 }

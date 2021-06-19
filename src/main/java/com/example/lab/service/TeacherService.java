@@ -1,11 +1,15 @@
 package com.example.lab.service;
 
 import com.example.lab.entity.Course;
+import com.example.lab.entity.CourseRecord;
 import com.example.lab.entity.DTO.CourseDTO;
 import com.example.lab.entity.Lab;
 import com.example.lab.exception.MyException;
 import com.example.lab.mapper.CourseMapper;
+import com.example.lab.mapper.CourseRecordMapper;
 import com.example.lab.mapper.LabMapper;
+import com.example.lab.vo.CRResponseVO;
+import com.example.lab.vo.CourseRecordVO;
 import com.example.lab.vo.CourseVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,8 @@ public class TeacherService {
     private CourseMapper courseMapper;
     @Autowired
     private LabMapper labMapper;
+    @Autowired
+    private CourseRecordMapper courseRecordMapper;
 
     @Cacheable(value = "course", key = "#name")
     public Course selectByCourseName(String name) {
@@ -139,5 +145,73 @@ public class TeacherService {
     public int deleteCourse(Long id) {
         int rows = courseMapper.deleteById(id);
         return rows;
+    }
+
+    public int addCourseRecord(CourseRecordVO courseRecordVO) {
+        Course course = selectCourseById(courseRecordVO.getCourseId());
+        if (course == null) {
+            throw new MyException(400, "课程不存在");
+        }
+        if (courseRecordVO.getWeekStartNo() + courseRecordVO.getWeekKeep() > 19) {
+            throw new MyException(400, "课程结束时间超过18周");
+        }
+        List<CourseRecord> courseRecords = courseRecordMapper.selectByCourseId(courseRecordVO.getCourseId());
+        if (courseRecords != null) {
+            for (CourseRecord c : courseRecords) {
+                if (c.getSectionNo() == courseRecordVO.getSectionNo()
+                        && c.getWeekday() == courseRecordVO.getWeekday()) {
+                    if (c.getWeekNo() >= courseRecordVO.getWeekStartNo()
+                            && c.getWeekNo() <
+                            (courseRecordVO.getWeekStartNo()+courseRecordVO.getWeekKeep())) {
+                        throw new MyException(400, "课程与已有课程冲突");
+                    }
+                }
+            }
+        }
+        int rows = 0;
+        for (int i = 0; i < courseRecordVO.getWeekKeep(); i++) {
+            Integer weekNo = courseRecordVO.getWeekStartNo() + i;
+            CourseRecord courseRecord = CourseRecord.builder()
+                    .courseId(courseRecordVO.getCourseId())
+                    .weekNo(weekNo)
+                    .sectionNo(courseRecordVO.getSectionNo())
+                    .weekday(courseRecordVO.getWeekday())
+                    .build();
+            rows+=courseRecordMapper.insert(courseRecord);
+        }
+        log.debug("{}", rows);
+        return rows;
+    }
+
+
+
+    public List<CRResponseVO> listCourseRecordById(Long cid) {
+        List<CourseRecord> courseRecords = courseRecordMapper.selectCourseRecordALl(cid);
+        String courseName = selectCourseById(cid).getName();
+        List<CRResponseVO> lists = new ArrayList<>();
+        for (CourseRecord c : courseRecords) {
+            CRResponseVO crResponseVO = CRResponseVO.builder()
+                    .courseName(courseName)
+                    .weekNo(c.getWeekNo())
+                    .sectionNo(c.getSectionNo())
+                    .weekday(c.getWeekday()).build();
+            lists.add(crResponseVO);
+        }
+        return lists;
+    }
+
+    public List<CRResponseVO> listCourseRecord() {
+        List<CourseRecord> courseRecords = courseRecordMapper.selectCourseRecordsALl();
+        List<CRResponseVO> lists = new ArrayList<>();
+        for (CourseRecord c : courseRecords) {
+            String courseName = selectCourseById(c.getCourseId()).getName();
+            CRResponseVO crResponseVO = CRResponseVO.builder()
+                    .courseName(courseName)
+                    .weekNo(c.getWeekNo())
+                    .sectionNo(c.getSectionNo())
+                    .weekday(c.getWeekday()).build();
+            lists.add(crResponseVO);
+        }
+        return lists;
     }
 }
