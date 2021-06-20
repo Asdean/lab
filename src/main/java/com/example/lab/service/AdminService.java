@@ -84,6 +84,10 @@ public class AdminService {
         if (role == null) {
             throw new MyException(400, "用户角色名称错误");
         }
+        User user = userMapper.selectByUsername(userVO.getUsername());
+        if (user != null) {
+            throw new MyException(400, "用户名已存在");
+        }
         String password = passwordEncoder.encode(userVO.getPassword());
         User u = User.builder()
                 .username(userVO.getUsername())

@@ -29,6 +29,10 @@ public class AccountService {
             if (!("教师".equals(userVO.getRoleName()))) {
                 throw new MyException(400, "用户只能注册角色为教师的账号！");
             }
+            User user = userMapper.selectByUsername(userVO.getUsername());
+            if (user != null) {
+                throw new MyException(400, "用户名已存在");
+            }
             Role role = getRoleByRoleName(userVO.getRoleName());
             if (role == null) {
                 throw new MyException(400, "注册角色不存在！");
