@@ -50,6 +50,7 @@ public class AccountController {
             String token = jwtComponent.encode(Map.of("userId", u.getId(), "roleId", u.getRoleId()));
             // 以指定键值对，置于响应header
             response.addHeader("token", token);
+            // long userId = jwtComponent.decode(token).getClaim("userId").asLong();
             return ResultVO.success(Map.of("msg", "登录成功"));
 
     }
