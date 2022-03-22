@@ -1,4 +1,3 @@
-/*
 package com.example.lab;
 
 import com.github.benmanes.caffeine.cache.Cache;
@@ -14,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @EnableCaching
 public class SpringCacheConfig {
-    @Bean
+    /*@Bean
     public CacheManager cacheManager() {
         // 创建Caffeine缓存管理器
         CaffeineCacheManager manager = new CaffeineCacheManager();
@@ -29,6 +28,5 @@ public class SpringCacheConfig {
         manager.setAllowNullValues(true);
         // 将管理器注入容器，替换默认管理器对象
         return manager;
-    }
+    }*/
 }
-*/
